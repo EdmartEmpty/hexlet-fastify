@@ -4,6 +4,11 @@ import { Eta } from "eta";
 
 export default fp(async (app, options) => {
   const eta = new Eta();
-
-  await app.register(view, { engine: { eta } });
+  const route = (name, params) => app.reverse(name, params);
+  await app.register(view, {
+        engine: { eta },
+        defaultContext: {
+          route,
+        },
+      });
 });

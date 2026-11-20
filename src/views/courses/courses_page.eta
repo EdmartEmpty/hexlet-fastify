@@ -11,9 +11,9 @@
           <th>Ссылка на героя</th>
         </tr>
         <tr>
-          <td><%= it.todo.name%></td>
+          <td><%= it.todo.name ?? '' %></td>
           <td>Любая</td>
-          <td><a href='users/<%= it.name%>'>Link Herous</a></td>
+          <td><a href='users/<%= it.term ?? '' %>'>Link Herous</a></td>
         </tr>
      </table>
      </div>

@@ -1,13 +1,17 @@
 import formbody from "@fastify/formbody";
 import yup from 'yup'
+import reversePlugin from "../../plugins/reverse.js";
 
 export default async function (app, opts) {
-  let todo
+  let todo = ''
   await app.register(formbody)
-  app.get('/', (request, reply) => {
+ 
+  
+
+  app.get('/',{ name: 'courses'}, (request, reply) => {
     const term = request.query.term || 'Введите запрос'
-    const data = {todo,term}
-   return reply.view("src/views/courses/courses_page",data)
+    const data = {todo, term}
+   return reply.view("src/views/courses/courses_page", data)
   })
 
   app.post('/',  {
@@ -58,6 +62,6 @@ export default async function (app, opts) {
     };
 
       todo = body
-   return reply.redirect("/courses")
+   return reply.redirect(app.reverse('courses'))
   })
 }
