@@ -1,5 +1,4 @@
-export default async function (fastify, opts) {
-  fastify.get('/', async function (request, reply) {
-    return { root: true }
-  })
+export default  function (app, opts) {
+  const data = {arr:[1,2,3]}
+  app.get('/', (request, reply) => reply.view("src/views/index",data))
 }

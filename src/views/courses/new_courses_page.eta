@@ -1,0 +1,51 @@
+<% layout("../layouts/page") %>
+ <html>
+  <body>
+    <% if (it.error) { %>
+    <p><%= it.error.message %></p>
+    <% } %>
+
+    <form action="/courses" method="post">
+      <div>
+        <label
+          >Имя:
+          <input type="text" name="name" value="<%= it.name ?? '' %>" />
+        </label>
+      </div>
+      <div>
+        <label
+          >Email:
+          <input
+            type="email"
+            name="email"
+            value="<%= it.email ?? '' %>"
+            required
+          />
+        </label>
+      </div>
+      <div>
+        <label
+          >Пароль:
+          <input
+            type="password"
+            name="password"
+            value="<%= it.password ?? '' %>"
+            required
+          />
+        </label>
+      </div>
+      <div>
+        <label
+          >Подтверждение пароля:
+          <input
+            type="password"
+            name="passwordConfirmation"
+            value="<%= it.passwordConfirmation ?? '' %>"
+            required
+          />
+        </label>
+      </div>
+      <input type="submit" value="Зарегистрировать" />
+    </form>
+  </body>
+</html>

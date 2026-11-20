@@ -1,0 +1,21 @@
+<% layout("../layouts/page") %>
+ <form role="form" method="GET" action="/courses">
+  <input type="search" name="term" value="<%= it.term ?? '' %>" />
+  <input type="submit" value="search" />
+</form>
+ <div>
+     <table>
+        <tr>
+          <th>Имя Героя</th>
+          <th>Способность</th>
+          <th>Ссылка на героя</th>
+        </tr>
+        <tr>
+          <td><%= it.todo.name%></td>
+          <td>Любая</td>
+          <td><a href='users/<%= it.name%>'>Link Herous</a></td>
+        </tr>
+     </table>
+     </div>
+     
+    
