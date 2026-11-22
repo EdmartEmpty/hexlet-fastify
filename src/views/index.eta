@@ -1,5 +1,5 @@
 <% layout("./layouts/page") %>
-      <% it.arr.forEach((number) => { %>
+      <% it.data.arr.forEach((number) => { %>
           <h1><%= number %></h1>
       <%})%>
 <a href='<%= it.route('courses')  %>'>Курсы</a>

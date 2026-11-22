@@ -1,16 +1,30 @@
 import formbody from "@fastify/formbody";
 import yup from 'yup'
-import reversePlugin from "../../plugins/reverse.js";
 
-export default async function (app, opts) {
-  let todo = ''
+
+const coursesStorage = [{title:'Enemy', text:'Test text', id: 1}]
+
+export default async function (app) {
+  
+  
   await app.register(formbody)
  
   
+app.get('/new',{ name: 'create_articul' }, (request, reply) => {
+   return reply.view("src/views/courses/new_courses_page")
+  })
+
 
   app.get('/',{ name: 'courses'}, (request, reply) => {
-    const term = request.query.term || 'Введите запрос'
-    const data = {todo, term}
+    const term = request.query.term
+
+    if(term){
+      const tryFindArticules = coursesStorage.find(courses => courses.title.includes(term)) 
+      const data = {term, coursesStorage:[tryFindArticules]}
+       return reply.view("src/views/courses/courses_page", data)
+    }
+    const data = { coursesStorage }
+
    return reply.view("src/views/courses/courses_page", data)
   })
 
@@ -19,20 +33,15 @@ export default async function (app, opts) {
     attachValidation: true,
     schema: {
       body: yup.object({
-        name: yup.string().min(2, "Имя должно быть не меньше двух символов"),
-        email: yup.string().email(),
-        password: yup.string().min(5),
-        passwordConfirmation: yup.string().min(5),
+        title: yup.string().min(2, "Имя должно быть не меньше двух символов"),
+        text: yup.string().min(10),
+        id:  yup.number()
       }),
     },
     validatorCompiler:
-      ({ schema, method, url, httpPart }) =>
+      ({ schema }) =>
       (data) => {
-        if (data.password !== data.passwordConfirmation) {
-          return {
-            error: Error("Password confirmation is not equal the password"),
-          };
-        }
+       
         try {
           const result = schema.validateSync(data);
           return { value: result };
@@ -41,14 +50,13 @@ export default async function (app, opts) {
         }
       },
   },(request, reply) => {
-  const { name, email, password, passwordConfirmation } = request.body;
+  const { title, text,id } = request.body;
 
     if (request.validationError) {
       const body = {
-        name,
-        email,
-        password,
-        passwordConfirmation,
+        title,
+        text,
+        id,
         error: request.validationError,
       };
 
@@ -56,12 +64,43 @@ export default async function (app, opts) {
       return;
     }
     let body = {
-      name,
-      email,
-      password,
+      title,
+      text,
+      id,
     };
 
-      todo = body
+     coursesStorage.push(body)
    return reply.redirect(app.reverse('courses'))
   })
+
+app.get('/:id',{name:'cours'},(req,res) =>{
+        const courseId = req.params.id
+       
+        try {
+             const cours = coursesStorage.find(cours => cours.id === Number(courseId))
+             if(!cours){
+              throw new Error(`no course, param id ${courseId}`)
+             }
+
+               return  res.view("src/views/courses/course_one_page",cours)
+        } catch (error) {
+               throw new Error(error.message, { cause: error })
+        }
+})
+
+
+app.get('/:id/edit',(request,response) => {
+     const courseId = request.params.id
+        try {
+             const cours = coursesStorage.find(cours => cours.id === Number(courseId))
+             if(!cours){
+              throw new Error(`no course, param id ${courseId}`)
+             }
+
+               return  response.view("src/views/courses/one_edit_page", cours)
+        } catch (error) {
+               throw new Error(error.message, { cause: error })
+        }   
+})
+  
 }

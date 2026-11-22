@@ -1,0 +1,29 @@
+<% layout("../layouts/page") %>
+ <html>
+  <body>
+    <% if (it.error) { %>
+    <p><%= it.error.message %></p>
+    <% } %>
+
+    <form action="<%= it.route('cours', {id: it.id})%>" method="patch">
+      <div>
+        <label
+          >Название статьи:
+          <input type="text" name="title" value="<%= it.title ?? '' %>" />
+        </label>
+      </div>
+      <div>
+        <label
+          >Текст:
+          <input
+            type="text"
+            name="text"
+            value="<%= it.text ?? '' %>"
+            required
+          />
+        </label>
+      </div>
+      <input type="submit" value="Сохранить" />
+    </form>
+  </body>
+</html>

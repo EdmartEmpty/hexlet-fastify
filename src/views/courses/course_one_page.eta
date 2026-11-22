@@ -1,0 +1,14 @@
+<% layout("../layouts/page") %>
+ <div>
+     <table>
+        <tr>
+          <th>Имя статьи</th>
+          <th>Текст</th>
+        </tr>
+        <tr>
+          <td><%= it.title ?? '' %></td>
+          <td><%= it.text ?? '' %></td>
+        </tr>
+     </table>
+     <a href='1/edit'>Редактировать</a>
+     </div>

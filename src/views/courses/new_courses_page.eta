@@ -8,44 +8,33 @@
     <form action="/courses" method="post">
       <div>
         <label
-          >Имя:
-          <input type="text" name="name" value="<%= it.name ?? '' %>" />
+          >Название статьи:
+          <input type="text" name="title" value="<%= it.title ?? '' %>" />
         </label>
       </div>
       <div>
         <label
-          >Email:
+          >Текст:
           <input
-            type="email"
-            name="email"
-            value="<%= it.email ?? '' %>"
+            type="text"
+            name="text"
+            value="<%= it.text ?? '' %>"
             required
           />
         </label>
       </div>
-      <div>
+       <div>
         <label
-          >Пароль:
+          >Id:
           <input
-            type="password"
-            name="password"
-            value="<%= it.password ?? '' %>"
+            type="text"
+            name="id"
+            value="<%= it.id ?? '' %>"
             required
           />
         </label>
       </div>
-      <div>
-        <label
-          >Подтверждение пароля:
-          <input
-            type="password"
-            name="passwordConfirmation"
-            value="<%= it.passwordConfirmation ?? '' %>"
-            required
-          />
-        </label>
-      </div>
-      <input type="submit" value="Зарегистрировать" />
+      <input type="submit" value="Создать" />
     </form>
   </body>
 </html>

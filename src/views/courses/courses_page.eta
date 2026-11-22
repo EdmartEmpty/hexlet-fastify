@@ -6,16 +6,18 @@
  <div>
      <table>
         <tr>
-          <th>Имя Героя</th>
-          <th>Способность</th>
-          <th>Ссылка на героя</th>
+          <th>Имя статьи</th>
+          <th>Текст</th>
         </tr>
+        <% it.coursesStorage.forEach((course) => {%>
         <tr>
-          <td><%= it.todo.name ?? '' %></td>
-          <td>Любая</td>
-          <td><a href='users/<%= it.term ?? '' %>'>Link Herous</a></td>
+          <td><%= course.title ?? '' %></td>
+          <td><%= course.text ?? '' %></td>
+          <td> <a href='<%= it.route('cours',{id: course.id})%>'><%= course.id%></a></td>
         </tr>
+        <% }) %>
      </table>
+     <a href='<%= it.route('create_articul') %>'>Создать статью</a>
      </div>
      
     
